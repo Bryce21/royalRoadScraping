@@ -1,0 +1,57 @@
+---
+alwaysApply: true
+---
+
+# Project: RoyalRoad visualization
+
+## Purpose
+The purpose of this project is to mine a site called royalroad.
+https://www.royalroad.com/home
+
+And to gain a understanding of how different authors, fictions, comments, and reviews interact. Will get the data and store it in a understandable and searchable graph format.
+
+A secondary goal of this project is to learn ai assisted coding, scrapy, neo4j graph database, and python.
+
+## Core functionality
+- Scrape royalroad with scrapy and store authors, fictions, comments, and reviews inside a graph database in a readable and understandable way.
+
+
+## Key Constraints
+ - Polite scraping. Royalroad is an external site and this project should limit how many requests for data are sent.
+    - Rate limited crawling
+    - Follow royalroad robots.txt
+ - Big data. There can be a lot of data present. Be aware of size of data being stored and proceed with caution.
+ - Learning. This is a personal project - developer needs to understand the code.
+
+## Implementation requirements
+ - **Error handling**: Log errors for now (network failures, parsing errors, missing data). Use Scrapy's logging module.
+ - **Data validation**: Validate all scraped data before inserting into Neo4j database. Check for missing fields, verify data types, and ensure data conforms to expected formats.
+
+## Success criteria
+ - Data is politely retrieved from RoyalRoad and stored in a readable way.
+ - Developer learns about python, ai assisted development, cursor, scraping, and neor4j graph database.
+
+# Project: RoyalRoad visualization
+
+## Purpose
+The purpose of this project is to mine a site called royalroad.
+https://www.royalroad.com/home
+
+And to gain a understanding of how different authors, fictions, comments, and reviews interact. Will get the data and store it in a understandable and searchable graph format.
+
+A secondary goal of this project is to learn ai assisted coding, scrapy, neo4j graph database, and python.
+
+## Core functionality
+- Scrape royalroad with scrapy and store authors, fictions, comments, and reviews inside a graph database in a readable and understandable way.
+
+
+## Key Constraints
+ - Polite scraping. Royalroad is an external site and this project should limit how many requests for data are sent.
+    - Rate limited crawling
+ - Big data. There can be a lot of data present. Be aware of size of data being stored and proceed with caution.
+ - Learning. This is a personal project - developer needs to understand the code.
+
+## Success criteria
+ - Data is politely retrieved from RoyalRoad and stored in a readable way.
+ - Developer learns about python, ai assisted development, cursor, scraping, and neor4j graph database.
+

@@ -1,0 +1,10 @@
+[project]
+name = "scraper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "mypy>=1.18.2",
+    "scrapy>=2.13.3",
+]

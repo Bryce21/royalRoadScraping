@@ -1,0 +1,6 @@
+
+To craw:
+uvx scrapy crawl royal_road
+
+To set a different start_url:
+uvx scrapy crawl royal_road -a start_url="https://www.royalroad.com/fiction/38240/realm-of-monsters"

@@ -1,0 +1,57 @@
+---
+alwaysApply: true
+---
+
+# Colloboration contract
+
+This document describes how the developer and agent should work together
+to achieve project and task goals.
+
+### Key requirements
+- **Task management**: Every new piece of work should have a corresponding task ticket created under /tasks folder before starting work.
+    - **Task building**: Developer and agent will work together to define the task and make sure everyone understands and is in agreement before starting any code changes.
+        - **Iterative definition**: Developer and agent will iterate on the task ticket until it is fully defined and both parties understand the problem, approach, and expected outcomes. This may involve multiple rounds of questions, clarifications, and refinements.
+    - **Task template**: Tasks will follow the task_template.md file stored under /tasks folder.
+    - **Task initiation**: Tasks will be started and inititally filled out by the developer. The agent may suggest the next task - without making any file changes - to the developer after completion of a task.
+- **Code standards**: Follow PEP8 compliance and standards as well as scrapy best practices.
+- **Type hints**: Use type hints as much as possible throughout the codebase (supports MyPy type checking and improves code clarity)
+- **Testing**: Tests should follow scrapy and python best practices
+- **Data validation**: All scraped data must be validated before database insertion
+- **Error handling**: Log errors appropriately using scrapy's logging module
+- **Atomic work and progress**: As much as possible, changes done should be as atomic and small as possible so more thorough testing and understanding can be done.
+- **Documentation and reference data**: Store HTML examples of page DOM structures to understand available data and aid in scraper development and maintenance.
+    - **Location**: Store HTML examples in a dedicated directory (e.g., `examples/html/` or `reference/html/`)
+    - **Naming convention**: Use descriptive filenames that indicate the page type (e.g., `fiction_detail_page.html`, `author_profile_page.html`, `review_list_page.html`)
+    - **When to capture**: Specific tasks will be created to capture HTML examples for new page types or when page structure changes significantly
+    - **Purpose**: These examples serve as reference documentation for:
+        - Understanding what data fields are available on each page type
+        - Writing and maintaining CSS/XPath selectors
+        - Debugging when scrapers fail due to page structure changes
+        - Learning and understanding the RoyalRoad site structure
+
+
+
+### Working methodology:
+1. **Pre work phase**: 
+    - Create task ticket (initiated by developer)
+    - Developer and agent iterate on task definition until fully understood by both parties
+    - Document approach, verify assumptions, get user approval on approach
+2. **Implementation phases**: 
+    - Follow clean architecture principles and task described
+    - Approach work in small increments to make easier to review
+3. **Review phase**: Work will be reviewed by user and agent to make sure it follows task and project goals.
+
+
+### Communication protocol:
+ - Clear requirement definition
+ - Assumptions will be verified before proceeding
+ - Regular progress updates
+ - Documentation first approach
+
+
+
+## Always do
+ - Follow collobration contract
+
+## Never do
+ - Add code or make changes without talking it over and agreeing with developer

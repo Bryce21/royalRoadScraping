@@ -1,0 +1,64 @@
+---
+alwaysApply: true
+---
+
+## Languages
+ - Primary: Python version 3.9+
+
+
+## Frameworks & libraries:
+- **Package manager** - uv
+    - https://docs.astral.sh/uv/
+
+
+### Scraping:
+- **Scrapy**
+    - https://docs.scrapy.org/en/latest/
+    - **Project structure**: Use standard Scrapy project structure (spiders/, items/, pipelines/, middlewares/, settings.py)
+    - **Configuration**: Store settings (rate limits, user agents, Neo4j connection details) in configuration files
+        - **Format**: Use TOML format for configuration files (consistent with pyproject.toml, Python standard)
+        - **Sensitive data**: Store credentials and secrets in `.env` files (use python-dotenv for loading)
+        - **Location**: Configuration files should be in project root or dedicated config/ directory
+    - **Best practices**:
+        - Respect robots.txt: Set `ROBOTSTXT_OBEY = True` in settings
+        - Request throttling: Use `DOWNLOAD_DELAY` and `CONCURRENT_REQUESTS_PER_DOMAIN` to limit request rate
+        - User-Agent: Set appropriate `USER_AGENT` in settings
+        - Error handling: Implement robust error handling with retry policies and logging
+        - Data validation: Validate scraped data before database insertion
+
+### Database:
+- **Neo4j**
+    - Offical driver: https://neo4j.com/docs/python-manual/current/
+    - Database will be local for development purposes.
+
+
+### Development tools
+-  **Linting**: Ruff
+    - https://docs.astral.sh/ruff/linter/
+- **Type checking** - MyPy
+    - https://mypy.readthedocs.io/en/stable/getting_started.html
+- **Testing** - pytest
+    - ## Languages
+ - Primary: Python version 3.9+
+
+
+## Frameworks & libraries:
+- **Package manager** - uv
+    - https://docs.astral.sh/uv/
+
+
+### Scraping:
+- **Scrapy**
+    - https://docs.scrapy.org/en/latest/
+
+### Database:
+- **Neo4j**
+    - Offical driver: https://neo4j.com/docs/python-manual/current/
+
+
+### Development tools
+-  **Linting**: Ruff
+    - https://docs.astral.sh/ruff/linter/
+- **Type checking** - MyPy
+    - https://mypy.readthedocs.io/en/stable/getting_started.html
+- **Testing** - pytest
