@@ -8,6 +8,9 @@ from urllib.parse import urlparse
 
 import scrapy
 from scrapy.http import Response
+from scrapy.selector import Selector
+
+from scraper.loaders import RoyalRoadFictionLoader
 
 
 class PageType(str, Enum):
@@ -42,15 +45,15 @@ class RoyalRoadSpider(scrapy.Spider):
         url = start_url if start_url else self.default_start_url
         self.start_urls = [url]
 
-    def parse(self, response: Response) -> Generator[None, None, None]:
+    def parse(self, response: Response) -> Generator[dict, None, None]:
         """
-        Parse the response and save HTML for inspection.
+        Parse the response and extract fiction data using Item Loader.
 
         Args:
             response: The HTTP response from the request.
 
         Yields:
-            None (this is a minimal implementation for connectivity testing)
+            dict: RoyalRoadFictionItem for fiction pages, None for other page types.
         """
         # Log response status
         self.logger.info(f"Response status: {response.status}")
@@ -63,7 +66,33 @@ class RoyalRoadSpider(scrapy.Spider):
         output_path = self._save_html_to_file(response)
         self.logger.info(f"Saved HTML to: {output_path}")
         
-        yield None
+        # Process fiction pages with Item Loader
+        if page_type == PageType.FICTION:
+            # Create selector from response and pass both to loader
+            selector = Selector(response=response)
+            loader = RoyalRoadFictionLoader(selector=selector, response=response)
+            loader.populate_from_response()
+            item = loader.load_item()
+            
+            # Print the item
+            self.logger.info("Extracted fiction item:")
+            self.logger.info(f"  Title: {item.get('title')}")
+            self.logger.info(f"  Author: {item.get('author')}")
+            self.logger.info(f"  URL: {item.get('url')}")
+            self.logger.info(f"  Fiction ID: {item.get('fiction_id')}")
+            self.logger.info(f"  Rating: {item.get('rating')}")
+            self.logger.info(f"  Followers: {item.get('follower_count')}")
+            self.logger.info(f"  Tags: {item.get('tags')}")
+            self.logger.info(f"  Description (first 100 chars): {str(item.get('description', ''))[:100]}...")
+            
+            # Also print the full item dict for inspection
+            self.logger.info(f"Full item: {dict(item)}")
+            
+            yield item
+        else:
+            # For non-fiction pages, just log and yield nothing
+            self.logger.info(f"Skipping non-fiction page type: {page_type.value}")
+            yield None
 
     def _save_html_to_file(self, response: Response) -> Path:
         """
