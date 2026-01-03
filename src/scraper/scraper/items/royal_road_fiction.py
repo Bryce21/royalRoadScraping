@@ -13,6 +13,7 @@ class RoyalRoadFictionItem(scrapy.Item):
     Fields:
         title (str): The title of the fiction.
         author (str): The name of the author.
+        author_id (int): The unique identifier for the author (extracted from profile URL).
         url (str): The canonical URL of the fiction page.
         description (str): The synopsis/description of the fiction.
         tags (list[str]): List of genre/tag strings associated with the fiction.
@@ -28,6 +29,7 @@ class RoyalRoadFictionItem(scrapy.Item):
     # Core fiction data fields
     title = scrapy.Field()
     author = scrapy.Field()
+    author_id = scrapy.Field()
     url = scrapy.Field()
     description = scrapy.Field()
     tags = scrapy.Field()

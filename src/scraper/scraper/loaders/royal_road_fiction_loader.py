@@ -69,6 +69,21 @@ def extract_fiction_id_from_script(response) -> Optional[int]:
     return None
 
 
+def extract_author_id_from_url(url: str) -> Optional[int]:
+    """Extract author ID from RoyalRoad profile URL pattern /profile/{id}."""
+    if not url:
+        return None
+    try:
+        parsed = urlparse(url)
+        # Pattern: /profile/{id} or /profile/{id}/...
+        match = re.search(r"/profile/(\d+)", parsed.path)
+        if match:
+            return int(match.group(1))
+    except (ValueError, AttributeError):
+        pass
+    return None
+
+
 def strip_html(value: str) -> str:
     """Remove HTML tags from text, preserving text content."""
     if not value:
@@ -145,6 +160,10 @@ class RoyalRoadFictionLoader(ItemLoader):
     fiction_id_in = MapCompose(strip_whitespace, parse_int)
     fiction_id_out = TakeFirst()
 
+    # Author ID: extract from profile URL
+    author_id_in = MapCompose(strip_whitespace, extract_author_id_from_url)
+    author_id_out = TakeFirst()
+
     def populate_from_response(self) -> None:
         """Populate all fields from the response, using fallback strategies.
 
@@ -167,6 +186,13 @@ class RoyalRoadFictionLoader(ItemLoader):
         self.add_css("author", 'meta[property="books:author"]::attr(content)')
         self.add_css("author", ".fic-title h4 a.font-white::text")
         self.add_css("author", '.portlet-body a.font-red[href^="/profile/"]::text')
+
+        # Author ID: extract from profile URL
+        author_url = self.selector.css('.portlet-body a.font-red[href^="/profile/"]::attr(href)').get()
+        if not author_url:
+            author_url = self.selector.css('.fic-title h4 a.font-white[href^="/profile/"]::attr(href)').get()
+        if author_url:
+            self.add_value("author_id", author_url)
 
         # URL: use canonical link (fallback to response.url in load_item)
         self.add_css("url", 'link[rel="canonical"]::attr(href)')
@@ -234,6 +260,7 @@ class RoyalRoadFictionLoader(ItemLoader):
             "follower_count",
             "fiction_id",
         ]
+        # Note: author_id is not in required_fields as it may not always be available
         for field in required_fields:
             if not self.get_output_value(field):
                 logger.warning(f"Missing required field: {field}")
